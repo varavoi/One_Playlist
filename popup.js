@@ -30,10 +30,13 @@ chrome.storage.local.get(['jsonArray'], (result) => {
         div.appendChild(deleteButton);
         dataContainer.appendChild(div);
     });
-
+    
     if (jsonArray.length === 0) {
         // Выводим сообщение, если данных нет
         dataContainer.textContent = "Нет данных";
+    }
+    if(dataContainer.children.length>0){
+        initAudioPlayer(dataContainer)
     }
 });
 

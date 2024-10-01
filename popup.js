@@ -1,6 +1,6 @@
 $(document).ready(function(){    
     // C:\Users\Вардан\Desktop\Google Расширения ПРИМЕР\От Мурада 18.09\Chrome_extension_saver 20.01\Chrome_extension_saver 20.01\popup.js
-    //11111 
+    //2222 
     const dataContainer = document.getElementById('dataContainer');
      dataContainer.style.display="none"
      let dcChildren = dataContainer.children
@@ -199,6 +199,7 @@ $(document).ready(function(){
              else{
                  elemsAudio.style.visibility = "hidden";
                  elemsAudio.style.display = "none";
+                 elemsAudio.replaceChildren()
              }
          }
      })
@@ -310,6 +311,12 @@ $(document).ready(function(){
      let array = []
          let select = document.createElement('select')
          select.classList.add("selectAlb")
+         let option1 = document.createElement('option')
+         option1.innerHTML = "Выберите альбом"
+         // option1.selected = "true"
+         // option1.disabled = "disabled"
+         select.appendChild(option1)
+ 
          for(let i=0;i<arr.length;i++){
              let option = document.createElement('option')
              option.classList.add("optionAlb")

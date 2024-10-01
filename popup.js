@@ -20,7 +20,7 @@ chrome.storage.local.get(['jsonArray'], (result) => {
             // Сохраняем обновленный массив в chrome.storage
             chrome.storage.local.set({ jsonArray: jsonArray }, () => {
                 console.log(`Элемент "${item}" удален.`);
-                updateUI(); // Обновляем интерфейс
+                //updateUI(); // Обновляем интерфейс
             });
         });
 
@@ -79,35 +79,24 @@ function parseJsonToObj(json){
     let obj = JSON.parse(json)
     return obj
 }
-function makeAudioElem(obj){
-    let containerAudio = document.createElement('div')
-    containerAudio.classList.add("container-audio")
-    let songInfo = document.createElement('h2')
-    songInfo.classList.add("text")
-    songInfo.innerHTML = obj.artistName + " - " + obj.songName
-    containerAudio.appendChild(songInfo)
-    let mus_cont= document.createElement('div')
-    mus_cont.classList.add("mus_cont")
-    let audioEl = document.createElement('audio')
-    audioEl.setAttribute("controls","")
-    audioEl.src = "Дюна Фирма.mp3"
-    audioEl.type = "audio/mp3"
-    mus_cont.appendChild(audioEl)
-    let delButt = document.createElement('button')
-    delButt.classList.add("delButt")
-    mus_cont.appendChild(delButt)
-    containerAudio.appendChild(mus_cont)
-    let arr =[]
-    arr.push(containerAudio)
-    return arr
-}
 
-$(".myButton").on("click",function(e){
+function toVisible(elem){
+    elem.css("visibility","visible").css("display","block")
+}
+function toHide(elem){
+    elem.css("visibility","hidden").css("display","none")
+}
+//событие клика на открытии аудиоплеера
+$(".openPlaylistButt").on("click",function(e){
+      
     if($("#dataContainer").css("visibility")=="visible"){
-        $("#dataContainer").css("visibility","hidden").css("display","none")
+        toHide($("#dataContainer"))
+        
     }
     else if($("#dataContainer").css("visibility")=="hidden"){
-        $("#dataContainer").css("visibility","visible").css("display","block")
+        toHide($("#createMyPlaylistWind"))
+        toHide($("#albums_Block"))
+        toVisible($("#dataContainer"))
     }
 })
 

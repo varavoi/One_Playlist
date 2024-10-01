@@ -105,5 +105,20 @@ $(".open_createMyPlaylistButt_wind").on("click",function(e){
     }
 })
 
+//событие клика на окна для просмотра альбомов
+$(".open_albumsButt").on("click",function(e){
+      
+    if($("#albums_Block").css("visibility")=="visible"){
+        toHide($("#albums_Block"))
+    }
+    else if($("#albums_Block").css("visibility")=="hidden"){
+        toHide($("#dataContainer"))
+        toHide($("#createMyPlaylistWind"))
+        toVisible($("#albums_Block"))
+
+    }
+})
+
+
 
 })

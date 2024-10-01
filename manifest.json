@@ -1,7 +1,7 @@
 ﻿{
     "manifest_version": 3,
-    "name": "One Playlist 7.0",
-    "version": "0.1.0",
+    "name": "One Playlist",
+    "version": "0.0.8",
     "description": "Слушайте песни в одном месте",
     "permissions": ["activeTab","webRequest", 
         "storage",

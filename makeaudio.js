@@ -21,7 +21,7 @@ function makeAudioElem(obj){
     //mus_cont.appendChild(intoAlbom_butt)
     containerAudio.appendChild(mus_cont)
     containerAudio.appendChild(intoAlbom_butt)
-    containerAudio.setAttribute("album","11")
+    //containerAudio.setAttribute("album","")
     let arr =[]
     arr.push(containerAudio)
     return arr

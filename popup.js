@@ -1,21 +1,115 @@
-$(document).ready(function(){    
+document.addEventListener('DOMContentLoaded', function () {
     // C:\Users\Вардан\Desktop\Google Расширения ПРИМЕР\От Мурада 18.09\Chrome_extension_saver 20.01\Chrome_extension_saver 20.01\popup.js
     //2222 
     const dataContainer = document.getElementById('dataContainer');
      dataContainer.style.display="none"
+     
      let dcChildren = dataContainer.children
      let albums_Block = document.getElementById('albums_Block');
      albums_Block.style.display="none"
      let albumArr = []
-     //alert($('#dataContainer').children().length)
-     //C:\Users\Вардан\Desktop\Google Расширения ПРИМЕР\новое\Последняя версия плеера\Chrome_extension_saver 20.01\popup.js
+     
      // Считываем данные из chrome.storage
      chrome.storage.local.get(['jsonArray','jsonAlbumArray'], (result) => {
-         const jsonArray = result.jsonArray || []; // Если нет, создаем пустой массив
-         const jsonAlbumArray = result.jsonAlbumArray || [];
-         
+             const jsonArray = result.jsonArray || []; // Если нет, создаем пустой массив
+             const jsonAlbumArray = result.jsonAlbumArray || [];
+             let createMyPlaylistButt = document.querySelector(".createMyPlaylistButt")
+ 
+             //событие клика на создания нового альбома
+              createMyPlaylistButt.addEventListener("click",function(e){
+                     let nameAlbum = document.querySelector("#nameAlbum").value
+                     let albObj = getInfoForAlbum(nameAlbum)
+                     const jsonAlbumString = JSON.stringify(albObj)
+                     jsonAlbumArray.push(jsonAlbumString)
+                     
+                         chrome.storage.local.set({ jsonAlbumArray }, () => {
+                             console.log("Создан альбом ", jsonAlbumString)
+                         })
+                     
+                     alert(`Альбом ${nameAlbum} успешно создан`)
+                     
+                 })
+             let open_albumsButt=document.querySelector(".open_albumsButt")
+                     //событие клика на окна для просмотра альбомов
+                  open_albumsButt.addEventListener("click",function(e){
+                   albums_Block.replaceChildren()
+             // Отображаем данные в всплывающем окне
+                         //console.log(jsonAlbumArray)
+                         // Отображаем данные в всплывающем окне
+                         jsonAlbumArray.forEach((item, index) => {
+                             console.log(item)
+                             let obj = parseJsonToObj(item)
+                             let div = createAlbum(obj)[0]
+                             // Создаем кнопку для удаления
+                             const deleteButton = div.querySelector('.delAlbum');
+                             let openAlbum = div.querySelector(".openAlbum")
+ 
+                             deleteButton.addEventListener('click', (e) => {
+                                 // Удаляем элемент по индексу
+                                 jsonAlbumArray.splice(index, 1); // Удаляем элемент из массива
+                                 //let elem = e.target.closest('container-audio')
+                                 //alert(e.target)
+                                 let nameAlbum = e.target.closest(".albumBlock").querySelector(".albumTitle").innerHTML
+                                 albums_Block.removeChild(e.target.closest(".albumBlock"))
+                                 // Сохраняем обновленный массив в chrome.storage
+                                 chrome.storage.local.set({ jsonAlbumArray: jsonAlbumArray }, () => {
+                                     console.log(`Элемент "${item}" удален.`);
+                                     alert(`Альбом ${nameAlbum} успешно удален`)
+                                     //updateUI(); // Обновляем интерфейс
+                                 });
+                             });
+                             
+                         openAlbum.addEventListener("click",function(e){
+                                 let albumBlock = e.target.closest(".albumBlock")
+                                                         
+                                 for(let i =0;i<dcChildren.length;i++){
+                                     
+                                     if(dcChildren[i].className=="container-audio" && dcChildren[i].getAttribute("album")==albumBlock.getAttribute("album")){
+                                         
+                                         let dcClone = dcChildren[i].cloneNode(true);
+                                                 albumBlock.querySelector('.album_audioBlock').appendChild(dcClone)
+                                                                                 
+                                             }
+                                 }
+                     
+                                 let elemsAudio = e.target.closest(".albumBlock").querySelector(".album_audioBlock")
+                                 
+                                 if(elemsAudio.style.visibility == "hidden" || elemsAudio.style.visibility  == ""){
+                                     elemsAudio.style.visibility = "visible";
+                                     elemsAudio.style.display = "block";
+                                     // initAudioPlayer(elemsAudio)
+                                 }
+                                 else{
+                                     elemsAudio.style.visibility = "hidden";
+                                     elemsAudio.style.display = "none";
+                                     elemsAudio.replaceChildren()
+                                 }
+                         })
+                                
+                             
+                             
+                             //C:\Users\Вардан\Desktop\Google Расширения ПРИМЕР\новое\Последняя версия плеера\Chrome_extension_saver\popup.js
+                             // Добавляем кнопку в элемент
+                                         
+                             albums_Block.appendChild(div);
+                             
+                         });
+                     
+ 
+                     if($("#albums_Block").css("visibility")=="visible"){
+                         toHide($("#albums_Block"))
+                     }
+                     else if($("#albums_Block").css("visibility")=="hidden"){
+                         toHide($("#dataContainer"))
+                         toHide($("#createMyPlaylistWind"))
+                         toVisible($("#albums_Block"))
+ 
+                     }
+                 })
+ 
+                 
          // Отображаем данные в всплывающем окне
-         jsonArray.forEach((item, index) => {
+             jsonArray.forEach((item, index) => {
              
              let obj = parseJsonToObj(item)
              let div = makeAudioElem(obj)[0]
@@ -35,12 +129,12 @@ $(document).ready(function(){
                      //updateUI(); // Обновляем интерфейс
                  });
              });
-     
- //intoAlbom_butt
- let intoAlbom_butt = div.querySelector('.intoAlbom_butt');
  
-     intoAlbom_butt.addEventListener("click",function(){
-         albumArr = []
+          //intoAlbom_butt
+          let intoAlbom_butt = div.querySelector('.intoAlbom_butt');
+          //Из раздела "Открыть плейлист", кнопка по нажатию которого показывает выпадающий список
+          intoAlbom_butt.addEventListener("click",function(){
+             albumArr = []
              jsonAlbumArray.forEach((item, index) => {
                  let obj = parseJsonToObj(item)
                  albumArr.push(obj.album)   
@@ -61,7 +155,7 @@ $(document).ready(function(){
             
  
              //выбор альбома и добавление песни в него
-          selectBtn.addEventListener("click",function(e){
+             selectBtn.addEventListener("click",function(e){
              e.target.addEventListener("change", function(){
                  let text = this.options[this.selectedIndex].text;
                  //let par = e.target.closest('.container-audio')
@@ -86,9 +180,10 @@ $(document).ready(function(){
                              
                              chrome.storage.local.set({ jsonArray: jsonArray}, () => {});
                          }  
-                         div.removeChild(selectBtn)                  
+                         // selectBtn.style.visibility = "hidden"               
                       });
               })
+             //  selectBtn.style.visibility = "hidden"       
              
      })
          
@@ -113,29 +208,39 @@ $(document).ready(function(){
      });
      
   
-   
-   //событие клика на создания нового альбома
- $(".createMyPlaylistButt").on("click",function(e){
-     let nameAlbum = document.querySelector("#nameAlbum").value
-     let albObj = getInfoForAlbum(nameAlbum)
-     addToJsonAlbumArray(albObj)
-     alert(`Альбом ${nameAlbum} успешно создан`)
-     
- })
-    
- function addToJsonAlbumArray(obj) {
-     chrome.storage.local.get(['jsonAlbumArray'], (result) => {
-         const jsonAlbumArray = result.jsonAlbumArray || [];
-         const jsonAlbumString = JSON.stringify(obj)
-        
-             jsonAlbumArray.push(jsonAlbumString)
-     
-         chrome.storage.local.set({ jsonAlbumArray }, () => {
-             console.log("Создан альбом ", jsonAlbumString)
-         })
-     })
- }
  
+ //событие клика на окна для создания альбомов
+ $(".open_createMyPlaylistButt_wind").on("click",function(e){
+         
+     if($("#createMyPlaylistWind").css("visibility")=="visible"){
+         toHide($("#createMyPlaylistWind"))
+     }
+     else if($("#createMyPlaylistWind").css("visibility")=="hidden"){
+         toHide($("#dataContainer"))
+         toHide($("#albums_Block"))
+         toVisible($("#createMyPlaylistWind"))
+ 
+     }
+ })
+ 
+ 
+ //событие клика на открытии аудиоплеера
+ $(".openPlaylistButt").on("click",function(e){
+   
+     if($("#dataContainer").css("visibility")=="visible"){
+         toHide($("#dataContainer"))
+         
+     }
+     else if($("#dataContainer").css("visibility")=="hidden"){
+         toHide($("#createMyPlaylistWind"))
+         toHide($("#albums_Block"))
+         toVisible($("#dataContainer"))
+     }
+ })
+   
+ //Наружние функции
+ 
+ //Получение объекта по названию альбома, для дальнейшей передачи в chrome.local.storege
  function getInfoForAlbum(albumName) {
      let obj = {}
      obj.album = albumName
@@ -143,170 +248,9 @@ $(document).ready(function(){
      return obj
  }
  
- // $(".addBtn").on("click", function(e) {
- //     let albObj = getInfoForAlbum($(this))
- //     addToJsonAlbumArray(albObj)
- // })
- 
-   
-   $("#albums_Block").on("click",function(e){
-     
-     if(e.target.className=="delAlbum"){
-         //alert(e.target)
-         let nameAlbum = e.target.closest(".albumBlock").querySelector(".albumTitle").innerHTML
-         document.querySelector("#albums_Block").removeChild(e.target.closest(".albumBlock"))
-        
-         alert(`Альбом ${nameAlbum} успешно удален`)
-     }
-         if(e.target.className=="openAlbum"){
-             
-             let albumBlock = e.target.closest(".albumBlock")
-                     //console.log(albumBlock.getAttribute("album"))
-                     //console.log(dcChildren)
-                     // dcChildren.forEach((dcItem)=>{
-                     //     //console.log("jjc")
-                     //     if(dcItem.className=="container-audio" && dcItem.getAttribute("album")==albumBlock.getAttribute("album")){
-                     //         let dcClone = dcItem.cloneNode(true);
-                     //         albumBlock.querySelector('.album_audioBlock').appendChild(parClone)
-                     //     }
-                     // })
-                    // console.log(dcChildren)
-                 //    let myAlb = albumBlock.getAttribute("album")
-                 //    //console.log(typeof dcChildren)
-                 //    elements = dcChildren.filter(item => item.getAttribute('album') === '123').map(element => element.cloneNode(true));
-                 //    elements.forEach(element => {
-                 //         console.log(element)
-                 //     });
-                     //albumBlock.querySelector('.album_audioBlock').appendChild(dcClone)
-                     for(let i =0;i<dcChildren.length;i++){
-                          
-                         if(dcChildren[i].className=="container-audio" && dcChildren[i].getAttribute("album")==albumBlock.getAttribute("album")){
-                              
-                             let dcClone = dcChildren[i].cloneNode(true);
-                                     albumBlock.querySelector('.album_audioBlock').appendChild(dcClone)
-                                     // if(!albumBlock.querySelector('.album_audioBlock').contains(dcClone)){
-                                         
-                                     // }
-                                     
-                                 }
-                     }
- 
-             let elemsAudio = e.target.closest(".albumBlock").querySelector(".album_audioBlock")
-             if(elemsAudio.style.visibility == "hidden" || elemsAudio.style.visibility  == ""){
-                 elemsAudio.style.visibility = "visible";
-                 elemsAudio.style.display = "block";
-             }
-             else{
-                 elemsAudio.style.visibility = "hidden";
-                 elemsAudio.style.display = "none";
-                 elemsAudio.replaceChildren()
-             }
-         }
-     })
- 
-     // $(".openAlbum").on("click",function(e){
-     //     let elemsAudio = e.target.closest(".albumBlock").querySelectorAll(".container-audio")
-     //     elemsAudio.forEach((elemAudio)=>{
-     //         if (elemAudio.style.visibility === "hidden" || elemAudio.style.visibility === "") {
-     //             // Если элемент скрыт или значение не установлено, показываем его
-     //             elemAudio.style.visibility = "visible";
-     //             elemAudio.style.display = "block";
-     //         } else {
-     //             // Если элемент видим, скрываем его
-     //             elemAudio.style.visibility = "hidden";
-     //             elemAudio.style.display = "none";
-     //         }
-     //     })
-         
-     //  })
- 
- //событие клика на окна для просмотра альбомов
- $(".open_albumsButt").on("click",function(e){
-     albums_Block.replaceChildren()
- // Отображаем данные в всплывающем окне
-         chrome.storage.local.get(['jsonAlbumArray','jsonArray'], (result) => {
-             const jsonAlbumArray = result.jsonAlbumArray || []; // Если нет, создаем пустой массив
-             let jsonArray = result.jsonArray
-             //console.log(jsonAlbumArray)
-             // Отображаем данные в всплывающем окне
-             jsonAlbumArray.forEach((item, index) => {
-                 console.log(item)
-                 let obj = parseJsonToObj(item)
-                 let div = createAlbum(obj)[0]
-                 // Создаем кнопку для удаления
-                 const deleteButton = div.querySelector('.delAlbum');
-                 let openAlbum = div.querySelector(".openAlbum")
-                 deleteButton.addEventListener('click', (e) => {
-                     // Удаляем элемент по индексу
-                     jsonAlbumArray.splice(index, 1); // Удаляем элемент из массива
-                     //let elem = e.target.closest('container-audio')
-                     //alert(e.target)
-                     albums_Block.removeChild(e.target.closest(".albumBlock"))
-                     // Сохраняем обновленный массив в chrome.storage
-                     chrome.storage.local.set({ jsonAlbumArray: jsonAlbumArray }, () => {
-                         console.log(`Элемент "${item}" удален.`);
-                         //updateUI(); // Обновляем интерфейс
-                     });
-                 });
- 
-                 
-                 //C:\Users\Вардан\Desktop\Google Расширения ПРИМЕР\новое\Последняя версия плеера\Chrome_extension_saver\popup.js
-                 // Добавляем кнопку в элемент
-                              
-                 albums_Block.appendChild(div);
-                 
-             });
-         })
- 
-         if($("#albums_Block").css("visibility")=="visible"){
-             toHide($("#albums_Block"))
-         }
-         else if($("#albums_Block").css("visibility")=="hidden"){
-             toHide($("#dataContainer"))
-             toHide($("#createMyPlaylistWind"))
-             toVisible($("#albums_Block"))
- 
-         }
-     })
  
  
- 
- //событие клика на окна для создания альбомов
-     $(".open_createMyPlaylistButt_wind").on("click",function(e){
-         
-         if($("#createMyPlaylistWind").css("visibility")=="visible"){
-             toHide($("#createMyPlaylistWind"))
-         }
-         else if($("#createMyPlaylistWind").css("visibility")=="hidden"){
-             toHide($("#dataContainer"))
-             toHide($("#albums_Block"))
-             toVisible($("#createMyPlaylistWind"))
- 
-         }
-     })
- 
- 
- //событие клика на открытии аудиоплеера
-     $(".openPlaylistButt").on("click",function(e){
-       
-         if($("#dataContainer").css("visibility")=="visible"){
-             toHide($("#dataContainer"))
-             
-         }
-         else if($("#dataContainer").css("visibility")=="hidden"){
-             toHide($("#createMyPlaylistWind"))
-             toHide($("#albums_Block"))
-             toVisible($("#dataContainer"))
-         }
-     })
-     
-    
-   
- 
-  
- 
-  
- 
+ //функция для создания выпадающего списка с перечнем альбомов
     function make_dropdownList(arr){
      let array = []
          let select = document.createElement('select')
@@ -327,6 +271,115 @@ $(document).ready(function(){
          array.push(select)
          return array
     }
+ 
+         //Функция для создания аудиоэлемента. Из спарсенного json в виде объекта создаем аудиоэлемент
+         function makeAudioElem(obj){
+             let containerAudio = document.createElement('div')
+             containerAudio.classList.add("container-audio")
+             let songInfo = document.createElement('h2')
+             songInfo.classList.add("text")
+             songInfo.innerHTML = obj.artistName + " - " + obj.songName
+             containerAudio.appendChild(songInfo)
+             let mus_cont= document.createElement('div')
+             mus_cont.classList.add("mus_cont")
+             let audioEl = document.createElement('audio')
+             audioEl.setAttribute("controls","")
+             audioEl.src = obj.musicURL    
+             audioEl.type = "audio/mp3"
+             mus_cont.appendChild(audioEl)
+             let delButt = document.createElement('button')
+             delButt.classList.add("delButt")
+             let intoAlbom_butt = document.createElement('button')
+             intoAlbom_butt.classList.add("intoAlbom_butt")
+             mus_cont.appendChild(delButt)
+             //mus_cont.appendChild(intoAlbom_butt)
+             containerAudio.appendChild(mus_cont)
+             containerAudio.appendChild(intoAlbom_butt)
+             //containerAudio.setAttribute("album","")
+             let arr =[]
+             arr.push(containerAudio)
+             return arr
+         }
+ 
+     //функция создания альбома
+         function createAlbum(name){
+             let arr = []
+             //<div class="albumBlock">
+             let albumBlock = document.createElement('div')
+             albumBlock.classList.add("albumBlock")
+             let album = document.createElement('div')
+             album.classList.add("album")
+             let albumTitle = document.createElement('p')
+             albumTitle.classList.add("albumTitle")
+             if(typeof name === 'object'){
+                 albumTitle.innerHTML = name.album
+                 albumBlock.setAttribute("album",name.album)
+             }
+             if(typeof name === 'string'){
+                 albumTitle.innerHTML = name
+                 albumBlock.setAttribute("album",name)
+             }
+             //albumTitle.innerHTML = name
+             album.appendChild(albumTitle)
+             let album_ButtBlock = document.createElement('div')
+             album_ButtBlock.classList.add("album_ButtBlock")
+             let openAlbum = document.createElement('button')
+             openAlbum.classList.add("openAlbum")
+             let playAlbum = document.createElement('button')
+             playAlbum.classList.add("playAlbum")
+             let delAlbum = document.createElement('button')
+             delAlbum.classList.add("delAlbum")
+             album_ButtBlock.appendChild(openAlbum)
+             album_ButtBlock.appendChild(playAlbum)
+             album_ButtBlock.appendChild(delAlbum)
+             album.appendChild(album_ButtBlock)
+             let album_audioBlock = document.createElement('div')
+             album_audioBlock.classList.add("album_audioBlock")
+             albumBlock.appendChild(album)
+             albumBlock.appendChild(album_audioBlock)
+             
+             arr.push(albumBlock)
+             return arr
+         }
+ 
+     //логика воспроизведения аудио
+      function initAudioPlayer(dataContainer) {
+             // let audioElements = document.querySelectorAll('container-audio');
+             let arr = dataContainer.querySelectorAll('.container-audio')
+             
+             arr.forEach(function(elem,ind) {
+                 //console.log(ind+""+elem.querySelector('div.mus_cont>audio').src)
+                 nextInd = ind+1
+                 let currAudio = elem.querySelector('div.mus_cont>audio')
+                 let nextAudio =  arr[nextInd].querySelector('div.mus_cont>audio')
+                 currAudio.addEventListener('play',(e) => {
+                     //console.log(arr[arr.length-1].closest(".container-audio").querySelector('.text').innerHTML)
+                 for(let i =0;i<arr.length+1;i++){
+                         if(arr[i].querySelector('div.mus_cont>audio')!==currAudio){
+                             arr[i].querySelector('div.mus_cont>audio').pause()
+                         }
+                     }
+                 })
+             
+                 currAudio.addEventListener('ended', () => {
+                         nextAudio.play();
+                     });
+             
+                 })
+     }
+ 
+     //Вспомогательные универсальные функции
+     function toVisible(elem){
+         elem.css("visibility","visible").css("display","block")
+     }
+     function toHide(elem){
+         elem.css("visibility","hidden").css("display","none")
+     }
+      //парсинг приходящего json файла в объект
+      function parseJsonToObj(json){
+         let obj = JSON.parse(json)
+         return obj
+     }
  
  
  })

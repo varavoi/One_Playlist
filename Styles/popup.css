@@ -49,7 +49,7 @@ body {
 
 
 
-.backroundPopup {
+.backgroundPopup {
     width: 370px;
     height: 250px;
     margin: -25;
@@ -163,7 +163,7 @@ body {
     color: #000;
 }
 
-.backroundPopup {
+.backgroundPopup {
     width: 370px;
     height: 250px;
     margin: 0;
@@ -172,7 +172,7 @@ body {
     transition: transform 0.5s ease;
 }
 
-.backroundPopup:hover {
+.backgroundPopup:hover {
     transform: scale(1.02);
 }
 

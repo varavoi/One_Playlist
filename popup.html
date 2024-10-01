@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой плейлист</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .btn {
+            width: 250px;
+            height: 250px;
+            color: aqua;
+            background-color: azure;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        
+        .myButton {
+            width: 200px;
+            height: 40px;
+            border-radius: 10px;
+            border-color: blue;
+            color: rgb(0, 0, 0);
+            background-color: rgba(255, 255, 255, 0.801);
+            width: 370px;
+            text-align: center;
+            text-transform: initial;
+            font-size: larger;
+            font-family: fantasy;
+        }
+        
+         :hover.myButton {
+            color: brown;
+            background-color: rgb(238, 248, 239);
+        }
+        
+        .kartinka {
+            width: 370px;
+            height: 250px;
+            margin: 0;
+            padding: 0;
+            border-radius: 5px;
+            transform: rotate3d(2em);
+            transform: rotateZ('angle', 2000);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup_window">
+        <h1>
+            <img src="images/fon.jpeg" class="kartinka">
+
+        </h1>
+
+        <button id="myButton" class="myButton">Open playlist!</button>
+        <p id="message"></p>
+        <script src="popup.js"></script>
+        <script src="inject.js"></script>
+    </div>
+
+</body>
+
+</html>

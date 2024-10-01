@@ -145,4 +145,19 @@ $("#albums_Block").on("click",function(e){
     })
 
 
+    function make_dropdownList(arr){
+        let array = []
+            let select = document.createElement('select')
+            select.classList.add("selectAlb")
+            for(let i=0;i<arr.length;i++){
+                let option = document.createElement('option')
+                option.classList.add("optionAlb")
+                option.value = arr[i]
+                option.innerHTML = arr[i]
+                select.appendChild(option)
+            }
+            array.push(select)
+            return array
+       }
+
 })

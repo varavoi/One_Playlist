@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                      if(playStatus==false){
                                          //alert(elemsAudio)
                                          //console.log("pause")
-                                         e.target.style.backgroundImage = "url('images/play.png')"
+                                         e.target.style.backgroundImage = "url('Images/play.png')"
                                          playStatus=true
                                          initAudioPlayer(elemsAudio,false)
                                          elemsAudio.replaceChildren()
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                      else if(playStatus==true){
                                          //alert(elemsAudio)
                                          //console.log("play")
-                                         e.target.style.backgroundImage = "url('images/pause.png')"
+                                         e.target.style.backgroundImage = "url('Images/pause.png')"
                                          playStatus=false
                                          initAudioPlayer(elemsAudio,true)
                                          

@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой плейлист</title>
-    <script src="Libs/jquery.js"></script>
-    <script src="popup.js"></script>
+    <script src="External_libraries/jquery.js"></script>
+    <script src="Scripts/popup.js"></script>
 
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="Styles/popup.css">
     
 </head>
 
 <body>
     <div class="popup_window">
         <h1>
-            <img src="images/fon.jpeg" class="kartinka">
+            <img src="./Images/backround.jpeg" class="backroundPopup">
         </h1>
         <button class="openPlaylistButt">Открыть плейлист</button>
         <button class="open_createMyPlaylistButt_wind">Создать плейлист</button>
@@ -27,7 +27,7 @@
 
             <div id="createMyPlaylistWind" style="display: none; visibility: hidden;">
                 <h2>Название альбома</h2>
-                <input id="nameAlbum" class="pesnya" type="text" placeholder="Напишите название альбома">
+                <input id="nameAlbum" class="nameAlbumArea" type="text" placeholder="Напишите название альбома">
                 <br>
                 <br>
                 <button class="createMyPlaylistButt">Создать альбом</button>

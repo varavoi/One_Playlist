@@ -18,23 +18,23 @@
     "content_scripts":[
         {
           "matches": ["https://tetamuz.online/*"],
-          "css": ["CSS/Inject.css"],
-          "js": ["Libs/jquery.js", "JS/Inject.js"]
+          "css": ["Styles/Inject.css"],
+          "js": ["External_libraries/jquery.js", "Scripts/Inject.js"]
         },
         {
           "matches": ["https://ru.drivemusic.me/*"],
-          "css": ["CSS/Inject.css"],
-          "js": ["Libs/jquery.js", "JS/Inject2.js"]
+          "css": ["Styles/Inject.css"],
+          "js": ["External_libraries/jquery.js", "Scripts/Inject2.js"]
         },
         {
             "matches": ["https://rux.muzmo.cc/*"],
-            "css": ["CSS/Inject.css"],
-            "js": ["Libs/jquery.js", "JS/Inject3.js"]
+            "css": ["Styles/Inject.css"],
+            "js": ["External_libraries/jquery.js", "Scripts/Inject3.js"]
           },
           {
             "matches": ["https://rus.hitmotop.com/*"],
-            "css": ["CSS/Inject.css"],
-            "js": ["Libs/jquery.js", "JS/Inject4.js"]
+            "css": ["Styles/Inject.css"],
+            "js": ["External_libraries/jquery.js", "Scripts/Inject4.js"]
           }
           
       ]

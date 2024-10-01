@@ -24,17 +24,17 @@
         {
           "matches": ["https://ru.drivemusic.me/*"],
           "css": ["CSS/Inject.css"],
-          "js": ["Libs/jquery.js","sql-wasm.js", "JS/Inject2.js"]
+          "js": ["Libs/jquery.js", "JS/Inject2.js"]
         },
         {
             "matches": ["https://rux.muzmo.cc/*"],
             "css": ["CSS/Inject.css"],
-            "js": ["Libs/jquery.js","sql-wasm.js", "JS/Inject3.js"]
+            "js": ["Libs/jquery.js", "JS/Inject3.js"]
           },
           {
             "matches": ["https://rus.hitmotop.com/*"],
             "css": ["CSS/Inject.css"],
-            "js": ["Libs/jquery.js","sql-wasm.js", "JS/Inject4.js"]
+            "js": ["Libs/jquery.js", "JS/Inject4.js"]
           }
           
       ]

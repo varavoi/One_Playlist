@@ -1,5 +1,5 @@
 $(document).ready(function() {
-$(".track__info").css("background","red");
+$(".track__info").css("background","#9cddf7");
 
 $(".track__info").html((index, oldHtml)=>{
        return oldHtml + "<button class = 'addBtn' title='Добавить в свой плейлист'></button>"

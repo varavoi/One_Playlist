@@ -1,5 +1,5 @@
 $(document).ready(function() {
-$("td[class='artist-title']").closest("tr").css("background","red");
+$("td[class='artist-title']").closest("tr").css("background","#9cddf7");
 
 $("td[class='artist-title']").html((index, oldHtml)=>{
        return oldHtml + "<button class = 'addBtn' title='Добавить в свой плейлист'></button>"

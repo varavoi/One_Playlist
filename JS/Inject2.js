@@ -1,5 +1,5 @@
 $(document).ready(function() {
-$("div[class='music-popular__item']").css("background","red");
+$("div[class='music-popular__item']").css("background","#9cddf7");
 
 $("div[class='music-popular__item']").html((index, oldHtml)=>{
        return oldHtml + "<button class = 'addBtn' title='Добавить в свой плейлист'></button>"

@@ -91,7 +91,19 @@ $(".openPlaylistButt").on("click",function(e){
     }
 })
 
+//событие клика на окна для создания альбомов
+$(".open_createMyPlaylistButt_wind").on("click",function(e){
+        
+    if($("#createMyPlaylistWind").css("visibility")=="visible"){
+        toHide($("#createMyPlaylistWind"))
+    }
+    else if($("#createMyPlaylistWind").css("visibility")=="hidden"){
+        toHide($("#dataContainer"))
+        toHide($("#albums_Block"))
+        toVisible($("#createMyPlaylistWind"))
 
+    }
+})
 
 
 })

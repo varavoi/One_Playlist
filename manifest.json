@@ -20,6 +20,11 @@
           "matches": ["https://tetamuz.online/*"],
           "css": ["CSS/Inject.css"],
           "js": ["Libs/jquery.js", "JS/Inject.js"]
+        },
+        {
+          "matches": ["https://ru.drivemusic.me/*"],
+          "css": ["CSS/Inject.css"],
+          "js": ["Libs/jquery.js","sql-wasm.js", "JS/Inject2.js"]
         }
       ]
     

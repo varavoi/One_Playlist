@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "One Playlist 7.0",
+    "version": "0.1.0",
+    "description": "Слушайте песни в одном месте",
+    "permissions": ["webRequest", 
+        "storage",
+         "activeTab"
+    ],
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    }
+    
+}

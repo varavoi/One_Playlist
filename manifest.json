@@ -31,6 +31,12 @@
             "css": ["CSS/Inject.css"],
             "js": ["Libs/jquery.js","sql-wasm.js", "JS/Inject3.js"]
           },
+          {
+            "matches": ["https://rus.hitmotop.com/*"],
+            "css": ["CSS/Inject.css"],
+            "js": ["Libs/jquery.js","sql-wasm.js", "JS/Inject4.js"]
+          }
+          
       ]
     
 }

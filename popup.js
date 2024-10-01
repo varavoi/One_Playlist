@@ -129,24 +129,19 @@ document.addEventListener('DOMContentLoaded', function () {
              
             //выбор альбома и добавление песни в него
              //div = toChoiseAlbum(div,i=null,selectBtn,jsonArray)
-             toChoiseAlbum(div,i=null,selectBtn,jsonArray)
+             toChoiseAlbum(div,selectBtn,jsonArray)
              //console.log(div)
           })
-             //console.log(selectAlb)
-             // Добавляем кнопку в элемент
-             //div.setAttribute("album",selectAlb)
-             //console.log(div)
+             
              let songInfo = div.querySelector(".text").innerHTML.split(" - ")
              let artistName = songInfo[0]
              let songName = songInfo[1]
             
-                 
                  if(artistName==obj.artistName && songName==obj.songName){
                      div.setAttribute("album",obj.album)
                  
                  }
              
-            
              div.appendChild(deleteButton);
              dataContainer.appendChild(div);
              
@@ -160,8 +155,11 @@ document.addEventListener('DOMContentLoaded', function () {
          }
      });
      
-  
- 
+  //close_createMyPlaylistButt_wind
+  //события закрытия окна для создания альбомов
+  $(".close_createMyPlaylistButt_wind").on("click",function(e){
+     toHide($("#createMyPlaylistWind"))
+  })
  //событие клика на окна для создания альбомов
  $(".open_createMyPlaylistButt_wind").on("click",function(e){
          
@@ -352,9 +350,10 @@ document.addEventListener('DOMContentLoaded', function () {
          });
          return deleteButton
      }
-     
+ 
+     //событие клика на создания нового альбома
      function tocreateMyPlaylistBut(createMyPlaylistButt,jsonAlbumArray){
-             //событие клика на создания нового альбома
+             
              createMyPlaylistButt.addEventListener("click",function(e){
                  let nameAlbum = document.querySelector("#nameAlbum").value
                  let albObj = getInfoForAlbum(nameAlbum)
@@ -369,10 +368,10 @@ document.addEventListener('DOMContentLoaded', function () {
                  
              })
      }
+ 
      //функция выбора альбома и добавление песни в него
-     function toChoiseAlbum(div,ind,selectBtn,jsonArray){
-         
-             selectBtn.addEventListener("change", function(){
+     function toChoiseAlbum(div,selectBtn,jsonArray){
+             selectBtn.addEventListener("change", function(e){
              let text = this.options[this.selectedIndex].text;
                  let songInfo = div.querySelector(".text").innerHTML.split(" - ")
                  let artistName = songInfo[0]
@@ -395,11 +394,8 @@ document.addEventListener('DOMContentLoaded', function () {
                  }
                  //console.log(jsonArray)
                  chrome.storage.local.set({ jsonArray: jsonArray}, () => {});
-                      
+                 e.target.style.display = "none"      
              });
- 
-             //console.log(window.selected_alb)
-             //console.log(div)
              return div
      }
              

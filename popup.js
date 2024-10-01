@@ -1,6 +1,7 @@
 $(document).ready(function() {
 const dataContainer = document.getElementById('dataContainer');
-
+    dataContainer.style.display="none"
+    let albumArr = []
 // Считываем данные из chrome.storage
 chrome.storage.local.get(['jsonArray'], (result) => {
     const jsonArray = result.jsonArray || []; // Если нет, создаем пустой массив
@@ -143,6 +144,43 @@ $("#albums_Block").on("click",function(e){
     }
        
     })
+
+    $("#dataContainer").on("click",function(e){
+        //событие добавления музыки в альбом
+       if(e.target.className === "intoAlbom_butt"){
+           let par = e.target.closest('.container-audio')
+           
+           let selectElem = make_dropdownList(albumArr)[0]
+           let hasSelChild = par.querySelector(".selectAlb")
+          
+           if(hasSelChild){
+              //par.removeChild(selectElem)
+               //alert("deleted")
+               par.removeChild(par.querySelector(".selectAlb"))
+           }
+           else if(!hasSelChild){
+               par.appendChild(selectElem)
+               //alert("added")
+           }
+           
+       }
+       
+       if(e.target.className === "selectAlb"){
+           e.target.addEventListener("change", function(){
+               let text = this.options[this.selectedIndex].text;
+               let par = e.target.closest('.container-audio')
+               par.setAttribute("album",text)
+               let albums_Block_childrens = document.querySelector("#albums_Block").childNodes
+               albums_Block_childrens.forEach(item=>{
+                   if(item.className=="albumBlock"){
+                       let parClone = par.cloneNode(true);
+                       item.appendChild(parClone)
+                   }
+               })
+             });
+       }
+       
+   })
 
 
     function make_dropdownList(arr){

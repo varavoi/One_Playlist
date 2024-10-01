@@ -75,17 +75,8 @@ function updateUI() {
 
 
 
-function parseJsonToObj(json){
-    let obj = JSON.parse(json)
-    return obj
-}
 
-function toVisible(elem){
-    elem.css("visibility","visible").css("display","block")
-}
-function toHide(elem){
-    elem.css("visibility","hidden").css("display","none")
-}
+
 //событие клика на открытии аудиоплеера
 $(".openPlaylistButt").on("click",function(e){
       

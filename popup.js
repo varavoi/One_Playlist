@@ -119,6 +119,30 @@ $(".open_albumsButt").on("click",function(e){
     }
 })
 
+  
+  //событие клика на создания нового альбома
+  $(".createMyPlaylistButt").on("click",function(e){
+    let nameAlbum = document.querySelector("#nameAlbum").value
+    let album = createAlbum(nameAlbum)[0]
+    let albums_Block = document.querySelector("#albums_Block")
+    albums_Block.appendChild(album)
+    albumArr.push(nameAlbum)
+    alert(`Альбом ${nameAlbum} успешно создан`)
+})
+   
+//событие клика на удаления альбома
+$("#albums_Block").on("click",function(e){
+    //let albums_Block = document.querySelector("#albums_Block")
+    
+    if(e.target.className=="delAlbum"){
+        //alert(e.target)
+        let nameAlbum = e.target.closest(".albumBlock").querySelector(".albumTitle").innerHTML
+        document.querySelector("#albums_Block").removeChild(e.target.closest(".albumBlock"))
+       
+        alert(`Альбом ${nameAlbum} успешно удален`)
+    }
+       
+    })
 
 
 })
